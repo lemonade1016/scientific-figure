@@ -198,6 +198,7 @@ Phase 8: 多模型生成 ─── 用户选择 N 个模型，并行生成，交
 - 始终保留用户覆盖选项
 
 推荐选项标注 `⭐ 推荐（原因）`。
+<img width="1368" height="806" alt="4e41e4de758d126f3da8e829a58247b6" src="https://github.com/user-attachments/assets/bf926b4b-eb9e-4dd3-a83d-a33e12b7b0ea" />
 
 ---
 
@@ -216,6 +217,7 @@ Phase 8: 多模型生成 ─── 用户选择 N 个模型，并行生成，交
 - 适用于：期刊 TOC 图、新闻稿配图、封面、社交媒体摘要
 
 用户也可以选择 **组合模式**（Hybrid），上部 70% 为详细机制，下部 30% 为 Graphical Abstract 总结条。
+<img width="1364" height="636" alt="d0929ca54eceee2c83a96b6e07e24974" src="https://github.com/user-attachments/assets/9deb7535-d954-4fb2-b267-aef0aaf720b1" />
 
 ---
 
@@ -238,6 +240,7 @@ Phase 8: 多模型生成 ─── 用户选择 N 个模型，并行生成，交
 | 跨学科 | Hybrid | 多层信息层次 |
 
 系统以 `AskUserQuestion` 呈现 7 种风格，推荐风格标注 `⭐ 推荐`，备选标注 `🔄 备选`。
+<img width="1370" height="844" alt="6ef4ed8a3343e27d3f80510b24f6fcbc" src="https://github.com/user-attachments/assets/5f20574a-d501-4e9e-87dd-0586761ce1ea" />
 
 ---
 
@@ -657,6 +660,7 @@ LAYER 7: 用户具体内容      —— 组件、关系、核心信息
 >   --output-prefix 001_r1 \
 >   --aspect-ratio 1:1
 > ```
+<img width="1370" height="844" alt="6ef4ed8a3343e27d3f80510b24f6fcbc" src="https://github.com/user-attachments/assets/1862b2e7-f4c6-4e0c-9053-256b2503c67d" />
 
 ---
 
