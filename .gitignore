@@ -1,0 +1,8 @@
+config.local.json
+state.json
+*.png
+*.jpg
+*.jpeg
+*.webp
+.claude/
+.DS_Store
