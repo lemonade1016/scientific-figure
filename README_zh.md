@@ -198,7 +198,7 @@ Phase 8: 多模型生成 ─── 用户选择 N 个模型，并行生成，交
 - 始终保留用户覆盖选项
 
 推荐选项标注 `⭐ 推荐（原因）`。
-<img width="1368" height="806" alt="4e41e4de758d126f3da8e829a58247b6" src="https://github.com/user-attachments/assets/bf926b4b-eb9e-4dd3-a83d-a33e12b7b0ea" />
+<img width="821" height="484" alt="4e41e4de758d126f3da8e829a58247b6" src="https://github.com/user-attachments/assets/bf926b4b-eb9e-4dd3-a83d-a33e12b7b0ea" />
 
 ---
 
