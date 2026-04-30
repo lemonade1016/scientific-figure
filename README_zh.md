@@ -1,4 +1,4 @@
-# Scientific Figure Generator v2 —— 完整使用说明
+# Scientific Figure Generator —— 完整使用说明
 
 ---
 
