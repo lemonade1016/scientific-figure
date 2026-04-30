@@ -2,41 +2,151 @@
 
 # Scientific Figure Generator
 
-A **two-layer Prompt Compiler** for generating scientific figures using multiple AI image generation models. This is a [Claude Code](https://claude.ai/code) skill that compiles natural language descriptions of scientific concepts into optimized image-generation prompts, then dispatches them to multiple providers in parallel for cross-model comparison.
+A **two-layer Prompt Compiler** that turns natural language descriptions of scientific concepts into publication-quality figures — with guided customization, multi-model parallel generation, and prompt distillation that cuts token waste by up to 60%.
+
+> **TL;DR:** Don't type prompts blindly into a web UI and pray. This skill gives you an interactive, recommendation-driven workflow that understands your discipline, picks the right layout, distills your prompt for optimal model performance, and generates figures from 6 models in parallel so you can compare and choose the best one.
+
+---
+
+## Why This Exists
+
+Researchers spend hours wrestling with AI image generators to produce scientific figures. The typical workflow looks like this:
+
+| Your Pain Point | What Actually Happens | How We Solve It |
+|---|---|---|
+| **Blind prompting** | You type a description into a web UI, hit generate, and hope. No iteration, no guidance, no structure. | **5 interactive phases** that analyze your input, recommend discipline/style/layout, and let you confirm or override — expert guidance without removing your control. |
+| **Token waste** | Your carefully written 800-token prompt gets diluted across the model's attention mechanism. Critical constraints buried in paragraph 3 are effectively ignored. | **Two-stage prompt distillation** compresses prompts by 40–60%, converting verbose academic rules into concrete visual vocabulary that image models actually respond to. |
+| **Single-model gamble** | You pick one model (Midjourney? DALL·E? Gemini?), generate 4 variants, and settle. No way to know if another model would have nailed it. | **Parallel generation across 6 models** — same distilled prompt, all backends at once. Output filenames follow `[ID]_[round]_[provider].png` for systematic comparison. |
+| **Layout guesswork** | You manually describe spatial arrangement ("put X on the left, Y on the right, Z in the middle...") with no guarantee the model understands it. | **Auto Layout Engine** with 6 layout types (Pipeline, Central Hub, Grid, Flow, Radial, Hierarchical), visual weight assignment, and reading-path optimization. |
+| **Abstract rule failure** | You write "ensure consistency and readability" — the model doesn't know what that looks like. | **Visual primitive translation** — "consistent entity colors, grayscale-readable palette, ≥30% luminance gap" instead of abstract instructions. |
+| **Domain ignorance** | Generic image models don't know biological signaling conventions, ML architecture diagram standards, or chemistry notation. | **8 discipline libraries** with domain-specific visual grammars: protein shapes, arrow semantics, CPK color conventions, layer representations, and more. |
+| **No quality baseline** | You have to remember to include every quality requirement in every prompt. | **Built-in quality standards** — the Three-Second Rule, three-tier visual hierarchy, colorblind-safe palettes, and element count discipline are baked into every generation. |
+
+---
+
+## Highlights
+
+<div align="center">
+
+| 🧠 **Guided, Not Blind** | ⚡ **Distill, Don't Waste** | 🔀 **Compare, Don't Settle** |
+|---|---|---|
+| 5 interactive phases with expert recommendations. You make the decisions; we do the heavy lifting. | 40–60% token reduction. Convert "maintain visual consistency" into `1.5pt uniform strokes, flat 5-color palette, grid-aligned`. | One prompt → 6 models in parallel. Pick the best. Every. Single. Time. |
+
+| 🎯 **Visual Primitives** | 📐 **Auto Layout** | 🧬 **Discipline-Native** |
+|---|---|---|
+| "Solid arrows=activation, T-bar=inhibition, dashed=indirect" — models understand this. | 6 layout types auto-detected from your description. No manual spatial wrangling. | From biomedical pathways to ML architectures — every field's visual conventions baked in. |
+
+</div>
+
+---
 
 ## Architecture
 
 ```
-                    +-----------------------------------+
-                    |  LAYER 1: DECISION ENGINE          |
-                    |  (Phases 0-7, model-agnostic)      |
-                    |                                    |
-USER INPUT --------->| Phase 0: Intake                  |
-                    | Phase 1: Auto-Analysis            |
-                    | Phase 2: Discipline Selection     |----> Output:
-                    | Phase 3: Narrative Mode           |      - distilled prompt
-                    | Phase 4: Style Selection          |      - layout type
-                    | Phase 5: Auto Layout              |      - style
-                    | Phase 6: Prompt Construction      |      - aspect ratio
-                    | Phase 7: Prompt Distillation      |
-                    +---------------++------------------+
-                                    ||
-                                    vv
-                    +-----------------------------------+
-                    |  LAYER 2: IMAGE PROVIDERS          |
-                    |  (Phase 8, multi-model parallel)   |
-                    |                                    |
-    distilled ------>|  User selects N providers         |
-    prompt          |  +- ERNIE-Image-Turbo (Baidu)     |
-                    |  +- wan2.7-image-pro (Bailian)    |----> Output:
-                    |  +- qwen-image-2.0 (Bailian)      |      [ID]_[round]_[prov].png
-                    |  +- z-image-turbo (Bailian)       |      for cross-model comparison
-                    |  +- gemini-3-pro-image (API MART) |
-                    |  +- GPT-Image-2 (API MART)        |
-                    +-----------------------------------+
+                    ┌─────────────────────────────────┐
+                    │  LAYER 1: DECISION ENGINE        │
+                    │  (Phases 0–7, model-agnostic)    │
+                    │                                  │
+USER INPUT ────────▶│ Phase 0: Intake                  │
+                    │ Phase 1: Auto-Analysis           │
+                    │ Phase 2: Discipline Selection    │──▶ Output:
+                    │ Phase 3: Narrative Mode          │      • distilled prompt
+                    │ Phase 4: Style Selection         │      • layout type
+                    │ Phase 5: Auto Layout             │      • style
+                    │ Phase 6: Prompt Construction     │      • aspect ratio
+                    │ Phase 7: Prompt Distillation     │
+                    └──────────────┬──────────────────┘
+                                   │
+                                   ▼
+                    ┌─────────────────────────────────┐
+                    │  LAYER 2: IMAGE PROVIDERS        │
+                    │  (Phase 8, multi-model parallel) │
+                    │                                  │
+    distilled ─────▶│  User selects N providers        │
+    prompt          │  ┌─ ERNIE-Image-Turbo (Baidu)    │
+                    │  ├─ wan2.7-image-pro (Bailian)   │──▶ Output:
+                    │  ├─ qwen-image-2.0 (Bailian)     │      [ID]_[round]_[prov].png
+                    │  ├─ z-image-turbo (Bailian)      │      for cross-model comparison
+                    │  ├─ gemini-3-pro-image (API MART)│
+                    │  └─ GPT-Image-2 (API MART)       │
+                    └─────────────────────────────────┘
 ```
 
 **Layer 1** is model-agnostic — it compiles user intent into an optimized prompt without coupling to any specific provider. **Layer 2** takes that distilled prompt and sends it to user-selected models in parallel, enabling scientific evaluation of which model renders the concept best.
+
+### The 8-Phase Workflow
+
+| Phase | Name | Type | What Happens |
+|---|---|---|---|
+| 0 | Intake | 👤 User | Describe your figure — natural language, code, or structured outline |
+| 1 | Auto-Analysis | ⚙️ Auto | Detect discipline, narrative mode, layout type, and style fit |
+| 2 | Guided Discipline | 👤 User | Confirm or override the recommended scientific field |
+| 3 | Narrative Mode | 👤 User | Choose mechanism diagram or graphical abstract mode |
+| 4 | Guided Style | 👤 User | Select visual style from discipline-aware recommendations |
+| 5 | Auto Layout | ⚙️ Auto | Determine optimal layout type, visual weights, and reading path |
+| 6 | Prompt Construction | ⚙️ Auto | Assemble 7-layer full prompt with all constraints |
+| 7 | Prompt Distillation | ⚙️ Auto | Compress 40–60% — convert abstract rules to visual vocabulary |
+| 8 | Multi-Provider Generation | 👤 User | Select providers, generate in parallel, compare results |
+
+## Features
+
+### Discipline Libraries (8 fields)
+
+Each discipline comes with domain-specific visual conventions, standard element vocabularies, and color standards:
+
+- **Biomedical & Molecular Life Sciences** — signaling cascades, protein complexes, cellular compartments
+- **Chemistry, Materials & Nanoscience** — synthesis routes, crystal structures, energy diagrams
+- **AI & Computer Science** — neural architectures, data pipelines, attention mechanisms
+- **Engineering & Applied Physics** — device schematics, circuit diagrams, MEMS structures
+- **Clinical Medicine & Healthcare** — disease mechanisms, treatment workflows, trial designs
+- **Environmental, Earth & Climate Sciences** — biogeochemical cycles, ecosystem models, climate feedbacks
+- **Physics & Mathematics** — quantum processes, spacetime diagrams, manifold visualizations
+- **General Science** — fallback for interdisciplinary or emerging fields
+
+### Visual Styles (5 modes)
+
+- **Classic Vector** — clean, flat, journal-ready (Nature/Cell/Science grade)
+- **Hand-Drawn Sketch** — whiteboard/research-notebook aesthetic
+- **Minimal Infographic** — high-impact editorial communication
+- **Photorealistic 3D Render** — for cover art and press releases
+- **Retro Scientific Illustration** — vintage textbook etching style
+
+### Narrative Modes
+
+- **Mechanism Diagram** — explain HOW something works (causal chains, process flows)
+- **Graphical Abstract** — convey the key finding in a single compelling composition
+- Plus 5 sub-modes: architecture, workflow, comparison, taxonomy, and timeline
+
+### Auto Layout Engine (6 types)
+
+| Layout Type | Best For | Visual Pattern |
+|---|---|---|
+| Pipeline | Workflows, cascades, sequential processes | Left→right linear flow |
+| Central Hub | Framework papers, multi-modal systems | Core surrounded by modules |
+| Grid | Comparisons, multi-condition experiments | Matrix arrangement |
+| Flow | Cycles, feedback loops, state machines | Directed graph |
+| Radial | Hierarchies, phylogenetic trees | Concentric or branching |
+| Hierarchical | Taxonomies, organizational structures | Top-down tree |
+
+### Prompt Distillation
+
+The distillation engine compresses the full assembled prompt before sending it to image models. Key transformations:
+
+- **Meta-instruction removal** — delete "you must ensure that..." and "it is important to..."
+- **Abstraction → visual vocabulary** — "maintain color semantics" → `consistent entity colors, ≥30% luminance gap`
+- **Multi-constraint clustering** — merge related rules into compact visual descriptors
+- **Position optimization** — critical constraints placed early where model attention is strongest
+- **Structural → spatial** — "grid layout, equal spacing" → `3×2 grid, uniform 24pt gap, left-aligned`
+
+Result: same semantic content, 40–60% fewer tokens, significantly better model adherence.
+
+### Quality Standards (built into every generation)
+
+- **Three-Second Rule** — core mechanism identifiable on first glance
+- **Three-Tier Visual Hierarchy** — primary → secondary → tertiary attention sequence
+- **Colorblind-Safe** — deuteranopia- and protanopia-compatible palettes
+- **Element Count Discipline** — 3–7 structural elements, grouped if needed
+- **Single Flow Direction** — consistent left→right or top→bottom
 
 ## Supported Image Providers
 
@@ -49,65 +159,59 @@ USER INPUT --------->| Phase 0: Intake                  |
 | API MART | gemini-3-pro-image-preview | api.apimart.ai |
 | API MART | GPT-Image-2 | api.apimart.ai |
 
-## File Structure
-
-```
-scientific-figure/
-  SKILL.md                          # Main skill definition & workflow (Phases 0-8)
-  generate_images.py                # Parallel image generator (stdlib only)
-  references/
-    discipline-library.md           # Scientific discipline taxonomy & style mappings
-    style-library.md                # Visual style catalog with examples
-    quality-standards.md            # Figure quality criteria & audit checklist
-    api-integration.md              # API endpoint specifications for each provider
-    narrative-composer.md           # Narrative mode templates (abstract, method, etc.)
-    layout-engine.md                # Layout type taxonomy & composition rules
-    prompt-distillation.md          # Prompt optimization & compression strategies
-  config.local.json                 # API keys (gitignored, user-provided)
-  state.json                        # Prompt ID counter & round tracking (gitignored)
-```
-
 ## Quick Start
 
-1. Copy this directory into your Claude Code skills folder:
+### 1. Install
 
-   ```
-   ~/.claude/skills/scientific-figure/
-   ```
+Copy this directory into your Claude Code skills folder:
 
-2. Configure your API keys in `config.local.json`:
+```
+~/.claude/skills/scientific-figure/
+```
 
-   ```json
-   {
-     "baidu_ai_studio": {
-       "api_key": "<your-baidu-api-key>",
-       "base_url": "https://aistudio.baidu.com/llm/lmapi/v3/images/generations"
-     },
-     "alibaba_bailian": {
-       "api_key": "<your-bailian-api-key>",
-       "base_url": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
-       "task_url": "https://dashscope.aliyuncs.com/api/v1/tasks"
-     },
-     "apimart": {
-       "api_key": "<your-apimart-api-key>",
-       "base_url": "https://api.apimart.ai/v1/images/generations"
-     }
-   }
-   ```
+### 2. Configure API Keys
 
-3. Invoke the skill in Claude Code by describing your figure:
+Edit `config.local.json` (gitignored):
 
-   ```
-   /scientific-figure
-   Draw a mechanism diagram of a Transformer attention layer with
-   multi-head attention, layer norm, and residual connections.
-   ```
+```json
+{
+  "baidu_ai_studio": {
+    "api_key": "<your-baidu-api-key>",
+    "base_url": "https://aistudio.baidu.com/llm/lmapi/v3/images/generations"
+  },
+  "alibaba_bailian": {
+    "api_key": "<your-bailian-api-key>",
+    "base_url": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+    "task_url": "https://dashscope.aliyuncs.com/api/v1/tasks"
+  },
+  "apimart": {
+    "api_key": "<your-apimart-api-key>",
+    "base_url": "https://api.apimart.ai/v1/images/generations"
+  }
+}
+```
 
-4. The skill will guide you through discipline selection, style choices, and layout before generating images from your chosen providers.
+You only need to configure the providers you intend to use.
 
-## Usage via Python Script
+### 3. Generate
 
-You can also call `generate_images.py` directly:
+Invoke the skill in Claude Code:
+
+```
+/scientific-figure
+Draw a mechanism diagram of a Transformer attention layer with
+multi-head attention, layer norm, and residual connections.
+```
+
+The skill will analyze your input, recommend discipline/style/layout, and after confirmation, generate images from your chosen providers in parallel.
+
+### 4. Compare & Iterate
+
+Output files follow `[promptID]_[round]_[provider].png` naming. Compare results across models, refine your description in a new round, and converge on the best figure.
+
+### Standalone Script Usage
+
+You can also call `generate_images.py` directly (zero dependencies beyond Python stdlib):
 
 ```bash
 python generate_images.py \
@@ -117,19 +221,27 @@ python generate_images.py \
   --aspect-ratio 1:1
 ```
 
-The script has zero dependencies beyond the Python standard library.
+## File Structure
 
-## Features
-
-- **Discipline-aware design** — tailors figure style to your field (computer science, biology, chemistry, physics, etc.)
-- **7 narrative modes** — abstract, method-overview, architecture, workflow, comparison, taxonomy, and timeline
-- **Auto layout engine** — selects optimal layout based on content structure (grid, flow, radial, hierarchical, etc.)
-- **Cross-model comparison** — same prompt, multiple backends; evaluate which model renders your concept best
-- **Structured output naming** — `[promptID]_[round]_[provider].png` for systematic comparison
+```
+scientific-figure/
+  SKILL.md                          # Main skill definition & workflow (Phases 0–8)
+  generate_images.py                # Parallel image generator (stdlib only)
+  references/
+    discipline-library.md           # Scientific discipline taxonomy & style mappings
+    style-library.md                # Visual style catalog with examples
+    quality-standards.md            # Figure quality criteria & audit checklist
+    api-integration.md              # API endpoint specifications for each provider
+    narrative-composer.md           # Narrative mode templates
+    layout-engine.md                # Layout type taxonomy & composition rules
+    prompt-distillation.md          # Prompt optimization & compression strategies
+  config.local.json                 # API keys (gitignored, user-provided)
+  state.json                        # Prompt ID counter & round tracking (gitignored)
+```
 
 ## License
 
-This project is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/). See [LICENSE](LICENSE) for the full text.
+[CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) — see [LICENSE](LICENSE).
 
 ## Author
 
