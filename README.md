@@ -1,11 +1,32 @@
 <img width="1672" height="941" alt="ChatGPT Image 2026年5月1日 04_00_58" src="https://github.com/user-attachments/assets/51064301-34e3-49e7-a8ac-0ee401b806bf" />
 
-# Scientific Figure Generator
+<p align="center">
+  <img width="120" alt="ChatGPT Image 2026年5月1日 14_03_18" src="https://github.com/user-attachments/assets/756298f9-b50d-42fb-84c3-d903a3f94011" />
+</p>
 
-A **two-layer Prompt Compiler** that turns natural language descriptions of scientific concepts into publication-quality figures — with guided customization, multi-model parallel generation, and prompt distillation that cuts token waste by up to 60%.
+<h1 align="center">Scientific Figure Generator</h1>
 
-> **TL;DR:** Don't type prompts blindly into a web UI and pray. This skill gives you an interactive, recommendation-driven workflow that understands your discipline, picks the right layout, distills your prompt for optimal model performance, and generates figures from 6 models in parallel so you can compare and choose the best one.
+<p align="center">
+A two-layer Prompt Compiler for generating publication-quality scientific figures.
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/github/v/release/yourname/scientific-figure">
+  <img src="https://img.shields.io/github/downloads/yourname/scientific-figure/total">
+  <img src="https://img.shields.io/badge/license-CC_BY_4.0-blue">
+  <img src="https://img.shields.io/badge/platform-Claude_Code-black">
+</p>
+
+<p align="center">
+  <a href="#why">Why</a> •
+  <a href="#features">Features</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#roadmap">Roadmap</a>
+</p>
+
+<p align="center">
+  <img width="1672" height="941" alt="ChatGPT Image 2026年5月1日 04_00_58" src="https://github.com/user-attachments/assets/51064301-34e3-49e7-a8ac-0ee401b806bf" />=
+</p>
 ---
 
 ## Why This Exists
