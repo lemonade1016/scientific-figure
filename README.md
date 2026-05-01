@@ -23,9 +23,8 @@ A two-layer Prompt Compiler for generating publication-quality scientific figure
 </p>
 
 <p align="center">
-  <img width="1672" height="941" alt="ChatGPT Image 2026年5月1日 04_00_58" src="https://github.com/user-attachments/assets/51064301-34e3-49e7-a8ac-0ee401b806bf" />=
+  <img width="1672" height="941" alt="ChatGPT Image 2026年5月1日 04_00_58" src="https://github.com/user-attachments/assets/51064301-34e3-49e7-a8ac-0ee401b806bf" />
 </p>
----
 
 ## Why This Exists
 
