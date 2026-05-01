@@ -1,5 +1,3 @@
-<img width="1672" height="941" alt="ChatGPT Image 2026年5月1日 04_00_58" src="https://github.com/user-attachments/assets/51064301-34e3-49e7-a8ac-0ee401b806bf" />
-
 <p align="center">
   <img width="120" alt="ChatGPT Image 2026年5月1日 14_03_18" src="https://github.com/user-attachments/assets/756298f9-b50d-42fb-84c3-d903a3f94011" />
 </p>
